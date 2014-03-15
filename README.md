@@ -18,4 +18,4 @@ TODO:
 Getting Started:
 * Install Vagrant
 * Install Virtual Box
-* vagrant up
+* `vagrant up`
