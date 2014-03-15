@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-apt-get update
-apt-get install -y python-pip python-dev build-essential
-pip install --upgrade pip 
-pip install --upgrade virtualenv 
-
-pip install Flask
+sudo apt-get update
+sudo apt-get install -y python-pip python-dev build-essential
+sudo pip install --upgrade pip 
+sudo pip install --upgrade virtualenv 
+sudo pip install Flask
