@@ -6,4 +6,3 @@ pip install --upgrade pip
 pip install --upgrade virtualenv 
 
 pip install Flask
-pip install twilio
