@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, jsonify, render_template, request
+from random import randint
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
-#    return "hello worlds"
+
+@app.route('/random/')
+def random_number():
+    #rand_num = random.random()
+    return jsonify(result=randint(0,100))
 
 if __name__ == '__main__':
     app.debug = True
