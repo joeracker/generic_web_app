@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type=text/javascript>
+  $(function() {
+    $('a#get_random').bind('click', function() {
+      $.getJSON('/random/number', {}, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+<h2>Use jQuery to Make an Asynch Request</h2>
+<p><span id=result>?</span>
+<p><a href=# id=get_random>get random number</a>
+
+{% endblock %}
