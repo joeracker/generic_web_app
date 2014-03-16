@@ -10,6 +10,10 @@ def index():
     return render_template('index.html')
 
 @app.route('/random/')
+def random_render():
+    return render_template('random.html')
+
+@app.route('/random/number')
 def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
