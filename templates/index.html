@@ -1,28 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-<h2>Home</h2>
+<div class="container"> 
+  <div class="jumbotron">
+    <h1>Build it with this generic app!</h1>
 
-<p>An app that will include some common capabilities that all modern web apps use. The app may have some simple example functionality to demonstrate functionality.  The current goal is to incorporate each of the following frameworks and libraries:</p>
+    <p>This app will include some common capabilities that all modern web apps use. The app may have some simple example features to demonstrate functionality.</p>
+  </div>
+  <div class="container">
+    <h2>Goals</h2>
+      <p>The current goal is to incorporate each of the following frameworks and libraries:</p>
 
-<ul>
-  <li>vagrant with virtual box integration
-  <li>Flask app with jinja2 template and index page
-  <li>simple jquery request for hello world json
-  <li>simple Rest interface for an example object + jquery interaction
-  <li>twitter bootstrap for UX
-  <li>MySQL database wrapped by simple rest CRUD API
-  <li>deploy with chef server
-  <li>deploy with app server nginx and wsgi
-  <li>integration with an API to enhance the database object
-  <li>auth with some tools such as facebook or linked in
-  <li>Read a simple text file from a specific path (use README.md)
-</ul>
+    <ul class="list-unstyled" style="padding-left:10px">
+      <li><i class="glyphicon glyphicon-check"></i> Vagrant with virtual box integration
+      <li><i class="glyphicon glyphicon-check"></i> Flask app with jinja2 template and index page
+      <li><i class="glyphicon glyphicon-unchecked"></i> Simple jquery request for hello world json
+      <li><i class="glyphicon glyphicon-check"></i> Simple Rest interface for an example object + jquery interaction
+      <li><i class="glyphicon glyphicon-check"></i> Twitter bootstrap for UX
+      <li><i class="glyphicon glyphicon-unchecked"></i> MySQL database wrapped by simple rest CRUD API
+      <li><i class="glyphicon glyphicon-unchecked"></i> Deploy with chef server
+      <li><i class="glyphicon glyphicon-unchecked"></i> Deploy with app server nginx and wsgi
+      <li><i class="glyphicon glyphicon-unchecked"></i> Integration with an API to enhance the database object
+      <li><i class="glyphicon glyphicon-unchecked"></i> Auth with some tools such as facebook or linked in
+      <li><i class="glyphicon glyphicon-unchecked"></i> Read a simple text file from a specific path (use README.md)
+    </ul>
 
-<h2>Getting Started:</h2>
-<ul>
-  <li>Install Vagrant
-  <li>Install Virtual Box
-  <li><code>vagrant up</code>
-</ul>
-
+    <h2>Getting Started:</h2>
+    <ul>
+      <li>Install Vagrant
+      <li>Install Virtual Box
+      <li><code>vagrant up</code>
+    </ul>
+   </div>
+  </div>
 {% endblock %}

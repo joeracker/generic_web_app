@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-<script type=text/javascript>
+<div class="container"> 
+  <div class="starter-template">
+    <h1>jQuery Asynch Request</h1>
+    <p><span id="result">?</span>
+    <p><a href="#" id="get_random" class="btn btn-primary btn-lg" role="button">get random number</a></p>
+  </div>
+</div>
+<script type="text/javascript">
   $(function() {
     $('a#get_random').bind('click', function() {
       $.getJSON('/random/number', {}, function(data) {
@@ -10,8 +17,4 @@
     });
   });
 </script>
-<h2>Use jQuery to Make an Asynch Request</h2>
-<p><span id=result>?</span>
-<p><a href=# id=get_random>get random number</a>
-
 {% endblock %}
