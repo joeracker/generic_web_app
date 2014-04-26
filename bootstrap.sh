@@ -13,5 +13,9 @@ sudo pip install Flask
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 sudo apt-get install -y mysql-server mysql-client
-mysql -u root -ppassword -e "CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON * . * TO 'generic'@'localhost';FLUSH PRIVILEGES;"
-
+#mysql -u root -ppassword -e "CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON * . * TO 'generic'@'localhost';FLUSH PRIVILEGES;"
+mysql -u root -ppassword << EOF
+ "CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';
+ GRANT ALL PRIVILEGES ON * . * TO 'generic'@'localhost';
+ FLUSH PRIVILEGES;"
+EOF
