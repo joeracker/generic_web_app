@@ -21,6 +21,7 @@ mysql.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://generic:password@localhost/generic'
 db = SQLAlchemy(app)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -33,6 +34,12 @@ def random_render():
 def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
+
+@app.route('/users/', methods=['GET'])
+def user():
+	users = User.query.all()
+	#return jsonify(json_list = users)
+	return jsonify(users=[i.serialize for i in users])
 
 
 class User(db.Model):
@@ -48,6 +55,19 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    @property
+    def serialize(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'username'	: self.username,
+           'email'		: self.email,
+           'user_type'	: self.user_type
+           #'id'         : self.id,
+           #'modified_at': dump_datetime(self.modified_at),
+           # This is an example how to deal with Many2Many relations
+           #'many2many'  : self.serialize_many2many
+       }
 
 if __name__ == '__main__':
     app.debug = True
