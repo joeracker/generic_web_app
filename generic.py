@@ -8,16 +8,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# Setup mysql portions
-'''
-mysql = MySQL()
-mysql.init_app(app)
-mysql.MYSQL_DATABASE_USER = "generic"
-mysql.MYSQL_DATABASE_PASSWORD = "password"
-mysql.MYSQL_DATABASE_DB = "generic"
-mysql.init_app(app)
-'''
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://generic:password@localhost/generic'
 db = SQLAlchemy(app)
 
@@ -60,6 +50,7 @@ class User(db.Model):
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
+       	   'id'			: self.id,
            'username'	: self.username,
            'email'		: self.email,
            'user_type'	: self.user_type

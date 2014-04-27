@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Use vagrant provision --provision-with shell to quickly rerun this script for the vagrant vm
+# From http://docs.vagrantup.com/v2/cli/provision.html
+
 # to get the latest updates
 sudo apt-get update
 
