@@ -46,13 +46,16 @@ class User(db.Model):
 
     @property
     def serialize(self):
-       """Return object data in easily serializeable format"""
+       """
+       Return object data in easily serializeable format
+       Handy notes from http://stackoverflow.com/questions/7102754/jsonify-a-sqlalchemy-result-set-in-flask
+
+       """
        return {
        	   'id'			: self.id,
            'username'	: self.username,
            'email'		: self.email,
            'user_type'	: self.user_type
-           #'id'         : self.id,
            #'modified_at': dump_datetime(self.modified_at),
            # This is an example how to deal with Many2Many relations
            #'many2many'  : self.serialize_many2many
