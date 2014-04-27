@@ -2,8 +2,6 @@
 
 from flask import Flask, jsonify, render_template, request
 from random import randint
-#from flaskext.mysql import MySQL
-#from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -66,5 +64,3 @@ if __name__ == '__main__':
     SERVER_PORT = 5000
 
     app.run(SERVER_NAME, SERVER_PORT)
-
-    #app.run()
