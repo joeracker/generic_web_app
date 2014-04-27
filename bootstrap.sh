@@ -8,6 +8,7 @@ sudo apt-get install -y python-pip python-dev build-essential
 sudo pip install --upgrade pip 
 sudo pip install --upgrade virtualenv 
 sudo pip install Flask
+sudo pip install flask-mysql
 
 # Setup mysql
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
@@ -15,7 +16,8 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again p
 sudo apt-get install -y mysql-server mysql-client
 #mysql -u root -ppassword -e "CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON * . * TO 'generic'@'localhost';FLUSH PRIVILEGES;"
 mysql -u root -ppassword << EOF
- "CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';
+ CREATE USER 'generic'@'localhost' IDENTIFIED BY 'password';
  GRANT ALL PRIVILEGES ON * . * TO 'generic'@'localhost';
- FLUSH PRIVILEGES;"
+ FLUSH PRIVILEGES;
 EOF
+sudo apt-get install libmysqlclient-dev
