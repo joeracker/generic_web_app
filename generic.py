@@ -23,11 +23,13 @@ def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
 
-@app.route('/users/', methods=['GET'])
+@app.route('/users/', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def user():
-	users = User.query.all()
-	#return jsonify(json_list = users)
-	return jsonify(users=[i.serialize for i in users])
+	if request.method == 'POST':
+		return 'not implemented'
+	elif request.method == 'GET':
+		users = User.query.all()
+		return jsonify(users=[i.serialize for i in users])
 
 
 class User(db.Model):
