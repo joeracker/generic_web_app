@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify, render_template, request
+'''
+Using tutorial from http://tech.pro/tutorial/1213/how-to-build-an-api-with-python-and-flask
+'''
+
+from flask import Flask, jsonify, render_template, request, abort, json
 from random import randint
 from flask.ext.sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
 
@@ -23,13 +28,55 @@ def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
 
-@app.route('/users/', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def user():
-	if request.method == 'POST':
-		return 'not implemented'
-	elif request.method == 'GET':
-		users = User.query.all()
-		return jsonify(users=[i.serialize for i in users])
+'''
+# Example to help with json headaches
+# http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
+@app.route('/todo/api/v1.0/tasks', methods = ['POST'])
+@auth.login_required
+def create_task():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    task = {
+        'id': tasks[-1]['id'] + 1,
+        'title': request.json['title'],
+        'description': request.json.get('description', ""),
+        'done': False
+    }
+    tasks.append(task)
+    return jsonify( { 'task': make_public_task(task) } ), 201
+'''
+
+@app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def users():
+    if request.method == 'POST':
+        if not request.json:
+            abort(400)
+
+        user = {
+           'username' : request.json['username'],
+           'email'    : request.json['email'],
+           'user_type'  : request.json['user_type']
+        }
+        #json_data = request.json()
+        #user_json = jsonify(request.get_json(force=True))
+        return jsonify( {'user': user} ), 201
+        #return user_json['username']
+        
+
+        # Save to the Database
+        #user = User('bill2', 'bill2@mejoe.com', 'admin')
+        #db.session.add(user)
+        #db.session.commit()
+
+
+    elif request.method == 'GET':
+		    users = User.query.all()
+		    return jsonify(users=[i.serialize for i in users])
+
+@app.route('/users/<id>')
+def user(id):
+    user = User.query.filter_by(id=id).first_or_404()
+    return jsonify(user=user)
 
 
 class User(db.Model):
@@ -68,4 +115,4 @@ if __name__ == '__main__':
     SERVER_NAME = "0.0.0.0"
     SERVER_PORT = 5000
 
-    app.run(SERVER_NAME, SERVER_PORT)
+    app.run(SERVER_NAME, SERVER_PORT, debug=True)
