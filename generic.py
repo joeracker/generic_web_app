@@ -28,45 +28,25 @@ def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
 
-'''
-# Example to help with json headaches
-# http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
-@app.route('/todo/api/v1.0/tasks', methods = ['POST'])
-@auth.login_required
-def create_task():
-    if not request.json or not 'title' in request.json:
-        abort(400)
-    task = {
-        'id': tasks[-1]['id'] + 1,
-        'title': request.json['title'],
-        'description': request.json.get('description', ""),
-        'done': False
-    }
-    tasks.append(task)
-    return jsonify( { 'task': make_public_task(task) } ), 201
-'''
-
 @app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def users():
     if request.method == 'POST':
         if not request.json:
             abort(400)
 
-        user = {
+        # Reconstruct the json request
+        user_json = {
            'username' : request.json['username'],
            'email'    : request.json['email'],
            'user_type'  : request.json['user_type']
         }
-        #json_data = request.json()
-        #user_json = jsonify(request.get_json(force=True))
-        return jsonify( {'user': user} ), 201
-        #return user_json['username']
-        
 
         # Save to the Database
-        #user = User('bill2', 'bill2@mejoe.com', 'admin')
-        #db.session.add(user)
-        #db.session.commit()
+        user = User(user_json['username'], user_json['email'], user_json['user_type'])
+        db.session.add(user)
+        db.session.commit()
+        
+        return jsonify( {'user': user_json} ), 201
 
 
     elif request.method == 'GET':
