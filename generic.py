@@ -2,6 +2,7 @@
 
 '''
 Using tutorial from http://tech.pro/tutorial/1213/how-to-build-an-api-with-python-and-flask
+and http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask (which I like better)
 '''
 
 from flask import Flask, jsonify, render_template, request, abort, json
@@ -34,15 +35,8 @@ def users():
         if not request.json:
             abort(400)
 
-        # Reconstruct the json request
-        user_json = {
-           'username' : request.json['username'],
-           'email'    : request.json['email'],
-           'user_type'  : request.json['user_type']
-        }
-
         # Save to the Database
-        user = User(user_json['username'], user_json['email'], user_json['user_type'])
+        user = User(request.json['username'], request.json['email'], request.json['user_type'])
         db.session.add(user)
         db.session.commit()
         
@@ -53,10 +47,10 @@ def users():
 		    users = User.query.all()
 		    return jsonify(users=[i.serialize for i in users])
 
-@app.route('/users/<id>')
-def user(id):
-    user = User.query.filter_by(id=id).first_or_404()
-    return jsonify(user=user)
+@app.route('/users/<int:user_id>', methods=['GET'])
+def user(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
+    return jsonify({'user': user.serialize})
 
 
 class User(db.Model):
@@ -80,15 +74,16 @@ class User(db.Model):
        Handy notes from http://stackoverflow.com/questions/7102754/jsonify-a-sqlalchemy-result-set-in-flask
 
        """
-       return {
+       return dict({
        	   'id'			: self.id,
            'username'	: self.username,
            'email'		: self.email,
            'user_type'	: self.user_type
+           #,'URI' : request.url + '/' + str(self.id)
            #'modified_at': dump_datetime(self.modified_at),
            # This is an example how to deal with Many2Many relations
            #'many2many'  : self.serialize_many2many
-       }
+       })
 
 if __name__ == '__main__':
     app.debug = True
