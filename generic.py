@@ -29,7 +29,7 @@ def random_number():
     #rand_num = random.random()
     return jsonify(result=randint(0,100))
 
-@app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/users', methods=['GET', 'POST'])
 def users():
     if request.method == 'POST':
         if not request.json:
@@ -39,19 +39,25 @@ def users():
         user = User(request.json['username'], request.json['email'], request.json['user_type'])
         db.session.add(user)
         db.session.commit()
-        
         return jsonify( {'user': user.serialize, 'URI': request.url + '/' + str(user.id)} ), 201
-
 
     elif request.method == 'GET':
 		    users = User.query.all()
 		    return jsonify(users=[i.serialize for i in users])
 
-@app.route('/users/<int:user_id>', methods=['GET'])
-def user(user_id):
-    user = User.query.filter_by(id=user_id).first_or_404()
-    return jsonify({'user': user.serialize})
 
+@app.route('/users/<int:user_id>', methods=['GET', 'DELETE', 'PUT'])
+def user(user_id):
+    if request.method == 'GET':
+        user = User.query.filter_by(id=user_id).first_or_404()
+        return jsonify({'user': user.serialize})
+    elif request.method == 'PUT':
+        return 'not implemented'
+    elif request.method == 'DELETE':
+        user = User.query.filter_by(id=user_id).first_or_404()
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify( {'DELETE' : 'successful', 'resource': request.url}), 200
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
