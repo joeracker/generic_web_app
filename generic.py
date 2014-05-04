@@ -46,7 +46,7 @@ def users():
         db.session.add(user)
         db.session.commit()
         
-        return jsonify( {'user': user_json} ), 201
+        return jsonify( {'user': user.serialize, 'URI': request.url + '/' + str(user.id)} ), 201
 
 
     elif request.method == 'GET':
